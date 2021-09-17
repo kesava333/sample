@@ -1,0 +1,26 @@
+Steps to reproduce Jenkins CICD Setup
+
+Master Setup:
+
+1. Install Jenkins Master(Generate a key pair, will be used later)
+2. Install Nexus Server
+
+Slave Setup:
+
+1. Create a VM
+2. Configure it as a slave to Jenkins Master (SSH Keys to Master to be copied to .ssh/authorized_keys)
+3. Install JAVA/MAVEN/TOmcat in slave machine
+
+Clone the GITLAB Repo (https://gitlab.com/thedevopschef/cicd-pipleine)
+
+1. Change the NEXUS ULR in pom.xml
+2. Edit the build.groovy to match you slave name
+3. Edit the deploy.groovy to match you slave name
+	a. Configure a "this build job is parameterised" and give the name as Artifactid 
+	b. choose Nexus3 Artifacts
+	c. Feed in Nexus URL, GroupID, Artifact ID, Packaging format
+
+Plugins you need to have in Jenkins Master
+
+1. GITLAB Plugin (To enabel Webhooks)
+2. Nexus Artifacts/Maven Artifacts - choice list provider(Nexus)

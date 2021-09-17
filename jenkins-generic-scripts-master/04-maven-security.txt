@@ -1,0 +1,58 @@
+Run the following as slave user
+
+mvn -emp $$Securepass$$
+
+mkdir ~/.m2/
+
+cat << EOF > ~/.m2/settings-security.xml
+<settingsSecurity>
+  <master>output of above command</master>
+</settingsSecurity>
+EOF
+
+mvn -ep NEXUSADMINPASSWORD
+
+cat << EOF > ~/.m2/settings.xml
+<settings>
+  <mirrors>
+    <mirror>
+      <id>nexus</id>
+      <mirrorOf>*</mirrorOf>
+      <url>http://34.95.32.225/repository/maven-public/</url>
+    </mirror>
+  </mirrors>
+  <profiles>
+    <profile>
+      <id>nexus</id>
+      <repositories>
+        <repository>
+          <id>central</id>
+          <url>http://central</url>
+          <releases><enabled>true</enabled></releases>
+          <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+      </repositories>
+     <pluginRepositories>
+        <pluginRepository>
+          <id>central</id>
+          <url>http://central</url>
+          <releases><enabled>true</enabled></releases>
+          <snapshots><enabled>true</enabled></snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+<activeProfiles>
+    <activeProfile>nexus</activeProfile>
+  </activeProfiles>
+  <servers>
+    <server>
+      <id>nexus</id>
+      <username>admin</username>
+      <password>PASSWORD Obtained from above command</password>
+    </server>
+  </servers>
+</settings>
+EOF
+
+
